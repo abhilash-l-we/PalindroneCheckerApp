@@ -1,25 +1,35 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Scanner;
 
-public class StackPalindrome {
+class QueueStackPalindrome {
 
     public static void main(String[] args) {
 
-        // Original string
-        String original = "madam";
+        // Enable user input
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String original = sc.nextLine();
 
-        // Create a stack to store characters
+        // Create Stack (LIFO)
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
+        // Create Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
+
+        // Enqueue and Push characters
         for (int i = 0; i < original.length(); i++) {
-            stack.push(original.charAt(i));
+            char ch = original.charAt(i);
+            stack.push(ch);
+            queue.add(ch);
         }
 
         boolean isPalindrome = true;
 
-        // Pop from stack and compare with original string
-        for (int i = 0; i < original.length(); i++) {
-            if (original.charAt(i) != stack.pop()) {
+        // Compare dequeue vs pop
+        while (!queue.isEmpty()) {
+            if (queue.remove() != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
@@ -31,5 +41,7 @@ public class StackPalindrome {
         } else {
             System.out.println(original + " is NOT a Palindrome.");
         }
+
+        sc.close();
     }
 }
