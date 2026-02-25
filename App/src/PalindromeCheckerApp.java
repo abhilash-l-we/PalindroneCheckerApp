@@ -1,6 +1,26 @@
 import java.util.Scanner;
 
-class CaseInsensitivePalindrome {
+class PalindromeChecker {
+
+    // Encapsulated palindrome logic
+    boolean checkPalindrome(String input) {
+
+        int start = 0;
+        int end = input.length() - 1;
+
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
+    }
+}
+
+class PalindromeApp {
 
     public static void main(String[] args) {
 
@@ -8,34 +28,17 @@ class CaseInsensitivePalindrome {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Normalize string
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
 
-        boolean isPalindrome = checkPalindrome(normalized);
+        boolean result = checker.checkPalindrome(input);
 
-        if (isPalindrome) {
-            System.out.println("It is a Palindrome.");
+        if (result) {
+            System.out.println(input + " is a Palindrome.");
         } else {
-            System.out.println("It is NOT a Palindrome.");
+            System.out.println(input + " is NOT a Palindrome.");
         }
 
         sc.close();
-    }
-
-    // Two-pointer palindrome check
-    static boolean checkPalindrome(String str) {
-
-        int start = 0;
-        int end = str.length() - 1;
-
-        while (start < end) {
-            if (str.charAt(start) != str.charAt(end))
-                return false;
-
-            start++;
-            end--;
-        }
-
-        return true;
     }
 }
