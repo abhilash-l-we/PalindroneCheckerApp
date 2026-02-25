@@ -1,17 +1,6 @@
 import java.util.Scanner;
 
-class LinkedListPalindrome {
-
-    // Node class for Singly Linked List
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
+class RecursivePalindrome {
 
     public static void main(String[] args) {
 
@@ -19,23 +8,7 @@ class LinkedListPalindrome {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        // Convert string to linked list
-        Node head = null;
-        Node tail = null;
-
-        for (int i = 0; i < input.length(); i++) {
-            Node newNode = new Node(input.charAt(i));
-
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        boolean isPalindrome = checkPalindrome(head);
+        boolean isPalindrome = checkPalindrome(input, 0, input.length() - 1);
 
         if (isPalindrome) {
             System.out.println(input + " is a Palindrome.");
@@ -46,53 +19,18 @@ class LinkedListPalindrome {
         sc.close();
     }
 
-    // Function to check palindrome using linked list logic
-    static boolean checkPalindrome(Node head) {
+    // Recursive method
+    static boolean checkPalindrome(String str, int start, int end) {
 
-        if (head == null || head.next == null)
+        // Base condition
+        if (start >= end)
             return true;
 
-        // Fast and Slow pointer to find middle
-        Node slow = head;
-        Node fast = head;
+        // If characters do not match
+        if (str.charAt(start) != str.charAt(end))
+            return false;
 
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Reverse second half
-        Node secondHalf = reverse(slow);
-
-        // Compare first half and reversed second half
-        Node firstHalf = head;
-        Node temp = secondHalf;
-
-        while (temp != null) {
-            if (firstHalf.data != temp.data)
-                return false;
-
-            firstHalf = firstHalf.next;
-            temp = temp.next;
-        }
-
-        return true;
-    }
-
-    // In-place reversal of linked list
-    static Node reverse(Node head) {
-
-        Node prev = null;
-        Node current = head;
-        Node next = null;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        return prev;
+        // Recursive call
+        return checkPalindrome(str, start + 1, end - 1);
     }
 }
