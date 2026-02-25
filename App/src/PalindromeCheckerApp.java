@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class RecursivePalindrome {
+class CaseInsensitivePalindrome {
 
     public static void main(String[] args) {
 
@@ -8,29 +8,34 @@ class RecursivePalindrome {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        boolean isPalindrome = checkPalindrome(input, 0, input.length() - 1);
+        // Normalize string
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+        boolean isPalindrome = checkPalindrome(normalized);
 
         if (isPalindrome) {
-            System.out.println(input + " is a Palindrome.");
+            System.out.println("It is a Palindrome.");
         } else {
-            System.out.println(input + " is NOT a Palindrome.");
+            System.out.println("It is NOT a Palindrome.");
         }
 
         sc.close();
     }
 
-    // Recursive method
-    static boolean checkPalindrome(String str, int start, int end) {
+    // Two-pointer palindrome check
+    static boolean checkPalindrome(String str) {
 
-        // Base condition
-        if (start >= end)
-            return true;
+        int start = 0;
+        int end = str.length() - 1;
 
-        // If characters do not match
-        if (str.charAt(start) != str.charAt(end))
-            return false;
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end))
+                return false;
 
-        // Recursive call
-        return checkPalindrome(str, start + 1, end - 1);
+            start++;
+            end--;
+        }
+
+        return true;
     }
 }
